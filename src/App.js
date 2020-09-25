@@ -6,7 +6,6 @@ import { nanoid } from 'nanoid';
 function App() {
   const [data, setDate] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [globalCounter, setGlobalCounter] = useState(3);
   const [itemPrice, setItemPrice] = useState(0);
   useEffect(() => {
     setIsLoading(true)
@@ -28,14 +27,9 @@ function App() {
   useEffect(() => {
     setItemPrice(0)
     data.map(e => {
-      setItemPrice(prevState => prevState + (e.discount_price * e.quantity))
+      setItemPrice(prevState => prevState + (e.discount_price || e.price * e.quantity))
     })
   }, [data])
-  const handleGlobalAdd = () => {
-    setGlobalCounter(globalCounter + 1)
-  }
-
-
 
 
 
@@ -167,7 +161,7 @@ function App() {
     <div className="App">
       <div className="items__top">
         <div className="items__basket">
-          <h3>Корзина {globalCounter}</h3>
+          <h3>Корзина {data.length}</h3>
         </div>
         <div className="items__price">
           <span className="items__price_cont">{itemPrice} руб.</span>
